@@ -19,18 +19,6 @@ VERSION = 'v0'
 REDDIT_USER = 'ReenigneArcher'
 REFRESH_TOKEN_FILENAME = "refresh_token"
 
-flair_colors = {
-    'discussion' : '0079d3',
-    'feature request' : '0dd3bb',
-    'help' : 'ea0027',
-    'question' : 'ffd635',
-    'other' : 'dadada',
-    'announcement' : 'ff4500',
-    'feedback' : '24a0ed',
-    'unknown' : '000000',
-    None : 'ffffff'
-}
-
 
 def initialize_refresh_token_file():
     if os.path.isfile(REFRESH_TOKEN_FILENAME):
@@ -188,9 +176,9 @@ def discord(db, submission):
     
     # get the flair color
     try:
-        color = int(flair_colors[submission.link_flair_text], 16)
-    except KeyError:
-        color = int(flair_colors[None], 16)
+        color = int(submission.link_flair_background_color, 16)
+    except:
+        color = int('ffffff', 16)
 
     try:
         redditor = reddit.redditor(name=submission.author)
