@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# misc files
+.breakpoints
+
+# bot files
+last_online
+refresh_token
+reddit_bot_database.db
