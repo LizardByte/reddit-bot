@@ -8,6 +8,11 @@ import time
 import praw
 from praw.util.token_manager import FileTokenManager
 
+# replit api
+from repltalk import Client
+import asyncio
+
+# database
 import pprint
 import shelve
 
@@ -107,6 +112,13 @@ def main():
         )
         return 1
     
+    # replit avatar
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    global repl_avatar
+    repl_avatar = loop.run_until_complete(get_repl_avatar(os.environ['REPL_OWNER']))
+    
+    # verify reddit refresh token or get new
     initialize_refresh_token_file()
 
     #keep the server alive
@@ -132,6 +144,11 @@ def main():
     for submission in subreddit.new():
         process_submission(submission)
     '''
+
+
+async def get_repl_avatar(user_name):
+    user = await Client().get_user(user_name)
+    return user.avatar
 
 
 def process_submission(submission):
@@ -188,7 +205,7 @@ def discord(db, submission):
     ### actually send the message... to do
     discord_webhook = {
         'username' : os.environ['REPL_SLUG'],
-        'avatar_url' : 'https://avatars.githubusercontent.com/u/84790584',
+        'avatar_url' : repl_avatar,
         'embeds': [
             {
             'author': {
@@ -215,7 +232,7 @@ def discord(db, submission):
     print(r.status_code)
     print(type(r.status_code))
 
-    if r.status_code == 200:
+    if r.status_code == 204:  # successful completion of request, no additional content
         # update the database
         db[submission.id]['bot_discord'] = {'sent' : True, 'sent_utc': int(time.time())}
 
