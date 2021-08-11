@@ -185,8 +185,7 @@ def process_submission(submission):
                 db = karma(db, submission)
     
     # re-write the last online time
-    with open ('last_online', 'w') as f:
-        f.write(str(int(time.time())))
+    last_online_writer()
 
 
 def discord(db, submission):
@@ -253,6 +252,12 @@ def commands(db, submission):
     return db
 
 
+def last_online_writer():
+    last_online = int(time.time())
+    with open ('last_online', 'w') as f:
+        f.write(str(last_online))
+
+
 USER_AGENT='%s/%s by u/%s' % (os.environ['REPL_SLUG'], VERSION, REDDIT_USER)
 
 global last_online
@@ -261,9 +266,7 @@ try:
     with open ('last_online', 'r') as f:
         last_online = int(f.read())
 except FileNotFoundError:
-    last_online = int(time.time())
-    with open ('last_online', 'w') as f:
-        f.write(str(last_online))
+    last_online_writer()
 
 if __name__ == "__main__":
     main()
