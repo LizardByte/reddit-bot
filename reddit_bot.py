@@ -102,6 +102,18 @@ def send_message(client, message):
     client.send(f"HTTP/1.1 200 OK\r\n\r\n{message}".encode("utf-8"))
     client.close()
 
+
+async def get_repl_avatar(user_name):
+    user = await Client().get_user(user_name)
+    return user.avatar
+
+
+def loop_repl_avatar():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    return loop.run_until_complete(get_repl_avatar(os.environ['REPL_OWNER']))
+
+
 def main():
     if "praw_client_id" not in os.environ:
         sys.stderr.write("Environment variable ``praw_client_id`` must be defined\n")
@@ -113,10 +125,9 @@ def main():
         return 1
     
     # replit avatar
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
     global repl_avatar
-    repl_avatar = loop.run_until_complete(get_repl_avatar(os.environ['REPL_OWNER']))
+    #repl_avatar = "https://raw.githubusercontent.com/RetroArcher/RetroArcher.branding/master/logos/RetroArcher-white-256x256.png"
+    repl_avatar = loop_repl_avatar()
     
     # verify reddit refresh token or get new
     initialize_refresh_token_file()
@@ -144,11 +155,6 @@ def main():
     for submission in subreddit.new():
         process_submission(submission)
     '''
-
-
-async def get_repl_avatar(user_name):
-    user = await Client().get_user(user_name)
-    return user.avatar
 
 
 def process_submission(submission):
