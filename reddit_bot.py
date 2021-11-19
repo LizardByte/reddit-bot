@@ -1,5 +1,6 @@
 import os
 import random
+import re
 import requests
 import socket
 import sys
@@ -7,10 +8,6 @@ import time
 
 import praw
 from praw.util.token_manager import FileTokenManager
-
-# replit api
-from repltalk import Client
-import asyncio
 
 # database
 import pprint
@@ -103,15 +100,13 @@ def send_message(client, message):
     client.close()
 
 
-async def get_repl_avatar(user_name):
-    user = await Client().get_user(user_name)
-    return user.avatar
+def get_repl_avatar(user_name):
+    url = f'https://replit.com/@{user_name}'
+    repl_page = requests.get(url)
 
+    image_link = re.search(r'property=\"og:image\" content=\"(https://storage\.googleapis\.com/replit/images/[a-z_0-9]*\.png)\"', repl_page.text).group(1)
 
-def loop_repl_avatar():
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    return loop.run_until_complete(get_repl_avatar(os.environ['REPL_OWNER']))
+    return image_link
 
 
 def main():
@@ -126,8 +121,7 @@ def main():
     
     # replit avatar
     global repl_avatar
-    #repl_avatar = "https://raw.githubusercontent.com/RetroArcher/RetroArcher.branding/master/logos/RetroArcher-white-256x256.png"
-    repl_avatar = loop_repl_avatar()
+    repl_avatar = get_repl_avatar(os.environ['REPL_OWNER'])
     
     # verify reddit refresh token or get new
     initialize_refresh_token_file()
@@ -158,6 +152,8 @@ def main():
 
 
 def process_submission(submission):
+
+    last_online = get_last_online()
 
     if last_online < submission.created_utc:
         print(submission.id)
@@ -263,16 +259,20 @@ def last_online_writer():
     with open ('last_online', 'w') as f:
         f.write(str(last_online))
 
+    return last_online
+
+
+def get_last_online():
+    try:
+        with open ('last_online', 'r') as f:
+            last_online = int(f.read())
+    except FileNotFoundError:
+        last_online = last_online_writer()
+    
+    return last_online
+
 
 USER_AGENT='%s/%s by u/%s' % (os.environ['REPL_SLUG'], VERSION, REDDIT_USER)
-
-global last_online
-
-try:
-    with open ('last_online', 'r') as f:
-        last_online = int(f.read())
-except FileNotFoundError:
-    last_online_writer()
 
 if __name__ == "__main__":
     main()
