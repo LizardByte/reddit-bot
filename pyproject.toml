@@ -7,7 +7,7 @@ authors = ["ReenigneArcher <<>>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 praw = "^7.3.0"
-Flask = "^2.0.1"
+Flask = "^2.0.3"
 repltalk = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
