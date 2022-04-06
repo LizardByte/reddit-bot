@@ -42,6 +42,7 @@ def initialize_refresh_token_file():
     ]
 
     reddit = praw.Reddit(
+        client_id=os.environ['PRAW_CLIENT_ID'],
         redirect_uri=redirect_uri,
         user_agent=USER_AGENT,
     )
