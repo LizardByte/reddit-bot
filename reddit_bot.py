@@ -163,6 +163,8 @@ def main():
 
     global reddit
     reddit = praw.Reddit(
+        client_id=os.environ['PRAW_CLIENT_ID'],
+        client_secret=os.environ['PRAW_CLIENT_SECRET'],
         token_manager=refresh_token_manager,
         user_agent=USER_AGENT,
     )
