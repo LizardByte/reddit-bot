@@ -137,4 +137,4 @@ dmypy.json
 # bot files
 last_online
 refresh_token
-reddit_bot_database.db
+reddit_bot_database.*

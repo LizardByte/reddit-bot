@@ -1,14 +1,16 @@
 [tool.poetry]
 name = "retroarcherreddit-bot"
-version = "0.1.0"
+version = "0.0.1"
 description = ""
 authors = ["ReenigneArcher <<>>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-praw = "^7.3.0"
-Flask = "^2.0.1"
-repltalk = "^1.0.0"
+praw = "7.5.0"
+Flask = "2.1.1"
+libgravatar = "1.0.0"
+python-dotenv = "0.20.0"
+requests = "2.27.1"
 
 [tool.poetry.dev-dependencies]
 
