@@ -4,13 +4,17 @@ import os
 
 app = Flask('')
 
+
 @app.route('/')
 def main():
-    return "%s is live!" % (os.environ['REPL_SLUG'])
+    return f"{os.environ['REPL_SLUG']} is live!"
+
 
 def run():
     app.run(host="0.0.0.0", port=8080)
 
+
 def keep_alive():
-    server = Thread(target=run)
+    server = Thread(name="Flask", target=run)
+    server.setDaemon(daemonic=True)
     server.start()
