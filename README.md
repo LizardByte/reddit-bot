@@ -8,13 +8,16 @@ Reddit bot written in python to help manage the RetroArcher subreddit.
     * Otherwise, it is recommended to use [Nginx Proxy Manager](https://nginxproxymanager.com/) and [Duck DNS](https://www.duckdns.org/)
   * Take note of the `client_id` and `client_secret`
 * Enter the following as environment variables  
-  :exclamation: if using Docker these can be arguments.  
-  * PRAW_CLIENT_ID = `client_id` from reddit app setup page
-  * PRAW_CLIENT_SECRET = `client_secret` from reddit app setup page
-  * PRAW_SUBREDDIT = subreddit to monitor (reddit user should be moderator of the subreddit)
-  * DISCORD_WEBHOOK = url of webhook to send discord notifications to (optional)
-  * GRAVATAR_EMAIL = gravatar email address to get avatar from (optional)
-  * REDIRECT_URI = The redirect URI entered during the reddit application setup (required unless running in replit)
+
+  | Parameter            | Required | Default | Description                                                              |
+  | -------------------- | -------- | ------- | ------------------------------------------------------------------------ |
+  | PRAW_CLIENT_ID       | True     | None    | `client_id` from reddit app setup page.                                  |
+  | PRAW_CLIENT_SECRET   | True     | None    | `client_secret` from reddit app setup page.                              |
+  | PRAW_SUBREDDIT       | True     | None    | Subreddit to monitor (reddit user should be moderator of the subreddit)  |
+  | DISCORD_WEBHOOK      | False    | None    | URL of webhook to send discord notifications to                          |
+  | GRAVATAR_EMAIL       | False    | None    | Gravatar email address to get avatar from                                |
+  | REDIRECT_URI         | True     | None    | The redirect URI entered during the reddit application setup             |
+
 * First run (or manually get a new refresh token):
   * Delete `refresh_token` file if needed
   * `python reddit_bot.py`
