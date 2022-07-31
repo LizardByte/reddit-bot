@@ -1,4 +1,5 @@
 # standard imports
+from datetime import datetime
 import os
 import random
 import requests
@@ -233,6 +234,8 @@ def discord(db, submission):
     except Exception:
         return
 
+    submission_time = datetime.fromtimestamp(submission.created_utc)
+
     # actually send the message
     discord_webhook = {
         'username': 'LizardByte-Bot',
@@ -252,7 +255,7 @@ def discord(db, submission):
                     'url': 'https://www.redditstatic.com/desktop2x/img/snoo_discovery@1x.png'
                 },
                 'footer': {
-                    'text': f'Posted on r/{os.environ["PRAW_SUBREDDIT"]} at {submission.created_utc}',
+                    'text': f'Posted on r/{os.environ["PRAW_SUBREDDIT"]} at {submission_time}',
                     'icon_url': 'https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png'
                 }
             }
