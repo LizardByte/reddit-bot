@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 load_dotenv(override=False)  # environment secrets take priority over .env file
 
 # modify as required
-APP = 'retroarcher-bot'
+APP = 'lizardbyte-bot'
 VERSION = 'v1'
 REDDIT_USER = 'ReenigneArcher'
 USER_AGENT = f'{APP}/{VERSION} by u/{REDDIT_USER}'
@@ -235,7 +235,7 @@ def discord(db, submission):
 
     # actually send the message
     discord_webhook = {
-        'username': 'RetroArcher Bot',
+        'username': 'LizardByte-Bot',
         'avatar_url': avatar,
         'embeds': [
             {

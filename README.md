@@ -1,5 +1,5 @@
-# RetroArcher.reddit-bot
-Reddit bot written in python to help manage the RetroArcher subreddit.
+# reddit-bot
+Reddit bot written in python to help manage the LizardByte subreddit.
 
 ## Instructions
 * Set up an application at [reddit apps](https://www.reddit.com/prefs/apps/).
