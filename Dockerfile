@@ -16,6 +16,9 @@ ENV DISCORD_WEBHOOK=$DISCORD_WEBHOOK
 ENV GRAVATAR_EMAIL=$GRAVATAR_EMAIL
 ENV REDIRECT_URI=$REDIRECT_URI
 
+RUN mkdir /app
+WORKDIR /app/
+
 COPY requirements.txt .
 COPY *.py .
 RUN pip install --no-cache-dir -r requirements.txt
