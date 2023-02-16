@@ -7,7 +7,7 @@ authors = ["ReenigneArcher <<>>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 praw = "7.6.0"
-Flask = "2.2.2"
+Flask = "2.2.3"
 libgravatar = "1.0.0"
 python-dotenv = "0.20.0"
 requests = "2.28.1"
