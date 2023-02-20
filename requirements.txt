@@ -1,5 +1,5 @@
 praw==7.6.0
 Flask==2.2.3
-libgravatar==1.0.0
+libgravatar==1.0.3
 python-dotenv==0.20.0
 requests==2.28.2
