@@ -1,4 +1,4 @@
-praw==7.6.1
+praw==7.7.0
 Flask==2.2.3
 libgravatar==1.0.4
 python-dotenv==1.0.0
