@@ -42,7 +42,7 @@ def initialize_refresh_token_file():
         'read',  # Access posts and comments through my account.
     ]
 
-    reddit = praw.Reddit(
+    reddit_auth = praw.Reddit(
         client_id=os.environ['PRAW_CLIENT_ID'],
         client_secret=os.environ['PRAW_CLIENT_SECRET'],
         redirect_uri=redirect_uri,
@@ -50,7 +50,7 @@ def initialize_refresh_token_file():
     )
 
     state = str(random.randint(0, 65000))
-    url = reddit.auth.url(scopes, state, "permanent")
+    url = reddit_auth.auth.url(scopes=scopes, state=state, duration="permanent")
     print(f"Now open this url in your browser: {url}")
 
     client, data = receive_connection()
@@ -69,7 +69,7 @@ def initialize_refresh_token_file():
         send_message(client, params["error"])
         return False
 
-    refresh_token = reddit.auth.authorize(params["code"])
+    refresh_token = reddit_auth.auth.authorize(params["code"])
     with open('refresh_token', 'w+') as f:
         f.write(refresh_token)
 
