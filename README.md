@@ -1,5 +1,5 @@
 # reddit-bot
-Reddit bot written in python to help manage the LizardByte subreddit.
+Reddit bot written in python to help monitor the LizardByte subreddit.
 
 ## Instructions
 * Set up an application at [reddit apps](https://www.reddit.com/prefs/apps/).
@@ -9,14 +9,14 @@ Reddit bot written in python to help manage the LizardByte subreddit.
   * Take note of the `client_id` and `client_secret`
 * Enter the following as environment variables  
 
-  | Parameter            | Required | Default | Description                                                              |
-  | -------------------- | -------- | ------- | ------------------------------------------------------------------------ |
-  | PRAW_CLIENT_ID       | True     | None    | `client_id` from reddit app setup page.                                  |
-  | PRAW_CLIENT_SECRET   | True     | None    | `client_secret` from reddit app setup page.                              |
-  | PRAW_SUBREDDIT       | True     | None    | Subreddit to monitor (reddit user should be moderator of the subreddit)  |
-  | DISCORD_WEBHOOK      | False    | None    | URL of webhook to send discord notifications to                          |
-  | GRAVATAR_EMAIL       | False    | None    | Gravatar email address to get avatar from                                |
-  | REDIRECT_URI         | True     | None    | The redirect URI entered during the reddit application setup             |
+  | Parameter          | Required | Default | Description                                                             |
+  |--------------------|----------|---------|-------------------------------------------------------------------------|
+  | PRAW_CLIENT_ID     | True     | None    | `client_id` from reddit app setup page.                                 |
+  | PRAW_CLIENT_SECRET | True     | None    | `client_secret` from reddit app setup page.                             |
+  | PRAW_SUBREDDIT     | True     | None    | Subreddit to monitor (reddit user should be moderator of the subreddit) |
+  | DISCORD_WEBHOOK    | False    | None    | URL of webhook to send discord notifications to                         |
+  | GRAVATAR_EMAIL     | False    | None    | Gravatar email address to get avatar from                               |
+  | REDIRECT_URI       | True     | None    | The redirect URI entered during the reddit application setup            |
 
 * First run (or manually get a new refresh token):
   * Delete `refresh_token` file if needed
