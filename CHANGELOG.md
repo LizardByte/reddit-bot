@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.0.6] - 2023-04-06
+**Fixed**
+- Added Docker volume mapping for persistent storage
+
 ## [0.0.5] - 2023-04-05
 **Fixed**
 - Fixed praw depreciation warning for praw v8.x
