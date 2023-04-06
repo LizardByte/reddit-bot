@@ -16,7 +16,11 @@ ENV DISCORD_WEBHOOK=$DISCORD_WEBHOOK
 ENV GRAVATAR_EMAIL=$GRAVATAR_EMAIL
 ENV REDIRECT_URI=$REDIRECT_URI
 
-RUN mkdir /app
+# create data directory
+RUN mkdir -p /data
+VOLUME /data
+
+RUN mkdir -p /app
 WORKDIR /app/
 
 COPY requirements.txt .
