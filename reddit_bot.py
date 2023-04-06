@@ -25,16 +25,29 @@ APP = 'lizardbyte-bot'
 VERSION = 'v1'
 REDDIT_USER = 'ReenigneArcher'
 USER_AGENT = f'{APP}/{VERSION} by u/{REDDIT_USER}'
-REFRESH_TOKEN_FILENAME = "refresh_token"
 
 try:  # for running in replit
     redirect_uri = f'https://{os.environ["REPL_SLUG"]}.{os.environ["REPL_OWNER"].lower()}.repl.co'
 except KeyError:
     redirect_uri = os.environ['REDIRECT_URI']
 
+# directories
+# parent directory name of this file, not full path
+PARENT_DIR = os.path.dirname(os.path.abspath(__file__)).split(os.sep)[-1]
+print(f'PARENT_DIR: {PARENT_DIR}')
+if PARENT_DIR == 'app':
+    # running in Docker container
+    DATA_DIR = '/data'
+else:
+    # running locally
+    DATA_DIR = 'data'
+
+REFRESH_TOKEN_FILE = os.path.join(DATA_DIR, 'refresh_token')
+LAST_ONLINE_FILE = os.path.join(DATA_DIR, 'last_online')
+
 
 def initialize_refresh_token_file():
-    if os.path.isfile(REFRESH_TOKEN_FILENAME):
+    if os.path.isfile(REFRESH_TOKEN_FILE):
         return True
 
     # https://www.reddit.com/api/v1/scopes.json
@@ -70,7 +83,7 @@ def initialize_refresh_token_file():
         return False
 
     refresh_token = reddit_auth.auth.authorize(params["code"])
-    with open('refresh_token', 'w+') as f:
+    with open(REFRESH_TOKEN_FILE, 'w+') as f:
         f.write(refresh_token)
 
     send_message(client, f"Refresh token: {refresh_token}")
@@ -160,7 +173,7 @@ def main():
     else:
         keep_alive.keep_alive()  # Start the web server
 
-    refresh_token_manager = FileTokenManager(REFRESH_TOKEN_FILENAME)
+    refresh_token_manager = FileTokenManager(REFRESH_TOKEN_FILE)
 
     global reddit
     reddit = praw.Reddit(
@@ -288,7 +301,7 @@ def commands(db, submission):
 
 def last_online_writer():
     last_online = int(time.time())
-    with open('last_online', 'w') as f:
+    with open(LAST_ONLINE_FILE, 'w') as f:
         f.write(str(last_online))
 
     return last_online
@@ -296,7 +309,7 @@ def last_online_writer():
 
 def get_last_online():
     try:
-        with open('last_online', 'r') as f:
+        with open(LAST_ONLINE_FILE, 'r') as f:
             last_online = int(f.read())
     except FileNotFoundError:
         last_online = last_online_writer()
